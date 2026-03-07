@@ -1,0 +1,10 @@
+# Add your songs below, one per line
+# Format: Song Title - Artist Name
+
+BLUFF - John Park
+All I Want - John Park
+Sanctuary - Joji
+Your Man - Joji
+Afterthought - Joji
+404 - KiiKii
+WISH - NCT WISH
