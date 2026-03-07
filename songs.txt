@@ -1,0 +1,16 @@
+# Add your songs below, one per line
+# Format: Song Title - Artist Name
+Afterthought - Joji, BENEE
+Sanctuary - Joji
+Your Man - Joji
+Skit(Today's Forecast) - John Park
+BLUFF - John Park 
+Nightcrawler - John Park
+Like a dream - John Park 
+All I want - John Park 
+Right Person, Wrong Time - John Park 
+Yes, and? - Ariana Grande
+Dream Girl - Shine
+404 - KiiKii
+Rude! - Hearts2Hearts
+Her - Megan Thee Stallion

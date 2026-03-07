@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.11">
+  <resources>
+    <format id="r1" name="FFVideoFormat1080p30" frameDuration="1/30s" width="1920" height="1080"/>
+    <asset id="r2" name="HeartsRude" uid="r2" start="0s" duration="215979/1000s" hasAudio="1" audioSources="1" audioChannels="2" audioRate="44100">
+      <media-rep kind="original-media" src="file:///Users/yeojinkim/Desktop/Feb 2026 - New ME/playlist-downloader/output/Hearts2Hearts_Rude.mp3"/>
+    </asset>
+  </resources>
+  <library>
+    <event name="Test">
+      <project name="Test">
+        <sequence format="r1" duration="215979/1000s" tcStart="0s" tcFormat="NDF" audioLayout="stereo">
+          <spine>
+            <audio ref="r2" offset="0s" duration="215979/1000s" start="0s"/>
+          </spine>
+        </sequence>
+      </project>
+    </event>
+  </library>
+</fcpxml>
