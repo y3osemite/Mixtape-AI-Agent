@@ -96,6 +96,36 @@ Levitating - Dua Lipa
 Double-click `download.sh`
 *(or in Terminal: `bash download.sh`)*
 
+---
+
+### ➕ Adding New Songs Later
+
+Already set up? Adding new songs is simple — previously downloaded tracks are automatically skipped.
+
+**Step 1 — Open `songs.txt` in a text editor:**
+
+```bash
+open -e ~/path/to/playlist-downloader/songs.txt
+```
+
+Add your new songs at the bottom, one per line:
+
+```
+New Song Title - Artist Name
+```
+
+Save with **Cmd+S**, close with **Cmd+W**.
+
+**Step 2 — Run the downloader again:**
+
+```bash
+bash ~/path/to/playlist-downloader/download.sh
+```
+
+Only new songs will be downloaded. Existing files in `output/` are automatically skipped.
+
+---
+
 **3. Find your files:**
 
 ```
