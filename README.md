@@ -128,6 +128,12 @@ bash download.sh
 ```
 
 Only new songs will be downloaded. Existing files in `output/` are automatically skipped.
+If the above line is not working, try 
+
+```
+cd ~/[your-folder-path]/playlist-downloader
+bash download.sh
+```
 
 ---
 
