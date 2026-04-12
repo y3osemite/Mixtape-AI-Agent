@@ -104,12 +104,15 @@ Already set up? Adding new songs is simple — previously downloaded tracks are 
 
 **Step 1 — Open `songs.txt` in a text editor:**
 
-# Example:
-# cd ~/Desktop/playlist-downloader
-# cd ~/Downloads/playlist-downloader
+Example:
+cd ~/Desktop/playlist-downloader
+cd ~/Downloads/playlist-downloader
 
+```
 cd ~/[your-folder-path]/playlist-downloader
 open -e songs.txt
+```
+
 Add your new songs at the bottom, one per line:
 
 ```
@@ -120,8 +123,8 @@ Save with **Cmd+S**, close with **Cmd+W**.
 
 **Step 2 — Run the downloader again:**
 
-```bash
-bash ~/path/to/playlist-downloader/download.sh
+```
+bash download.sh
 ```
 
 Only new songs will be downloaded. Existing files in `output/` are automatically skipped.
