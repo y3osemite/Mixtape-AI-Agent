@@ -104,10 +104,12 @@ Already set up? Adding new songs is simple — previously downloaded tracks are 
 
 **Step 1 — Open `songs.txt` in a text editor:**
 
-```bash
-open -e ~/path/to/playlist-downloader/songs.txt
-```
+# Example:
+# cd ~/Desktop/playlist-downloader
+# cd ~/Downloads/playlist-downloader
 
+cd ~/[your-folder-path]/playlist-downloader
+open -e songs.txt
 Add your new songs at the bottom, one per line:
 
 ```
