@@ -1,11 +1,11 @@
 ---
 name: mixtape
-description: Download songs as MP3s for a playlist video and prepare them for Final Cut Pro. Use whenever the user gives a list of songs (pasted text, a screenshot, a copied Spotify/Apple Music list, or "Title - Artist" lines) and wants them downloaded, added to the playlist, re-downloaded, or checked. Also use for "run the downloader", "add these songs", "fix the wrong song", or "regenerate the FCPXML".
+description: Download songs as MP3s for a playlist video. Use whenever the user gives a list of songs (pasted text, a screenshot, a copied Spotify/Apple Music list, or "Title - Artist" lines) and wants them downloaded, added to the playlist, re-downloaded, or checked. Also use for "run the downloader", "add these songs", "fix the wrong song". Does not build the Final Cut Pro project; that is the separate mixtape-fcp skill.
 ---
 
-# Mixtape: song list → MP3s → Final Cut Pro
+# Mixtape: song list → MP3s
 
-This repo turns a list of songs into MP3 files in `output/` and builds `playlist.fcpxml` for Final Cut Pro. The user curates; you do the mechanical work and report back clearly. The user is not a terminal person, so keep the final report plain and friendly.
+This skill turns a list of songs into MP3 files in `output/`. Building the Final Cut Pro project (`playlist.fcpxml`) is a separate step handled by the `mixtape-fcp` skill. Don't run it as part of downloading; do it only when the user asks. The user curates; you do the mechanical work and report back clearly. The user is not a terminal person, so keep the final report plain and friendly.
 
 All paths below are relative to the repo root (the folder containing `download.sh`).
 
@@ -30,7 +30,7 @@ Normalize whatever the user gives you:
 Then update `songs.txt`:
 - **Append** new songs at the bottom. Never delete or reorder the user's existing lines unless they ask — `songs.txt` is their running playlist.
 - Skip songs already in the file (compare case-insensitively) and tell the user which ones were already there.
-- If the user says this is a **new playlist** / "start fresh", ask whether to clear the old list and whether to move the existing `output/` MP3s into a dated folder (e.g. `output/archive-YYYY-MM-DD/`) so the new FCPXML only contains the new songs. `generate_fcpxml.py` puts **every** `*.mp3` directly inside `output/` on the timeline.
+- If the user says this is a **new playlist** / "start fresh", ask whether to clear the old list and whether to move the existing `output/` MP3s into a dated folder (e.g. `output/archive-YYYY-MM-DD/`), so `output/` holds only the new playlist.
 
 Show the user the lines you added before running the download if there was any ambiguity in the conversion.
 
@@ -42,7 +42,7 @@ Run:
 bash download.sh
 ```
 
-It downloads each song with `yt-dlp "ytsearch1:<Title> <Artist> official audio"`, saves it as `output/<Artist>_<Title>.mp3`, skips files that already exist, then regenerates `playlist.fcpxml`. It prints ✅/⚠️ per song and a summary. Downloads can take a while (roughly 10–30 s per song); use a long timeout (e.g. 10 minutes) for big lists.
+It downloads each song with `yt-dlp "ytsearch1:<Title> <Artist> official audio"`, saves it as `output/<Artist>_<Title>.mp3`, and skips files that already exist. It prints ✅/⚠️ per song and a summary. Downloads can take a while (roughly 10–30 s per song); use a long timeout (e.g. 10 minutes) for big lists.
 
 Record from the output which songs were downloaded now, which were skipped as already existing, and which failed.
 
@@ -84,12 +84,6 @@ yt-dlp "<URL>" -x --audio-format mp3 --audio-quality 0 \
 
 The filename must stay exactly `<Artist>_<Title>.mp3` (matching the `songs.txt` line) so `download.sh` recognizes it next time and skips it.
 
-After any manual fix, regenerate the Final Cut Pro file:
-
-```bash
-python3 scripts/generate_fcpxml.py output playlist.fcpxml
-```
-
 ## 5. Report back
 
 End with a short summary like:
@@ -100,14 +94,13 @@ End with a short summary like:
 ⏭️ Already had (2): Your Man – Joji, ...
 👂 Please listen to check (1): Afterthought – Joji (8:42 — might be a live version)
 ⚠️ Couldn't find (1): 404 – KiiKii → send me a YouTube link and I'll grab it
-🎬 playlist.fcpxml updated with 12 songs
 📁 Files are in the output/ folder
 ```
 
-Use song names, not file paths, and don't paste the raw script output. Mention that `playlist.fcpxml` can be imported in Final Cut Pro via **File → Import → XML**, and that FCP import is still a work in progress (README "Known Limitations").
+Use song names, not file paths, and don't paste the raw script output. When nothing is left to check or fix, add one line offering to build the Final Cut Pro project next (the `mixtape-fcp` skill). Don't build it unprompted.
 
 ## Things not to do
 
-- Don't commit or push MP3s, `output/`, or `playlist.fcpxml` to git.
+- Don't commit or push MP3s or `output/` to git.
 - Don't delete files in `output/` except a file you've confirmed is the wrong song and are replacing.
 - Don't edit `download.sh` or `generate_fcpxml.py` as part of a normal download request — if they seem broken, explain the problem and ask first.
