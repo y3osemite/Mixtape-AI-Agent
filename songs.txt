@@ -1,10 +1,14 @@
 # Add your songs below, one per line
 # Format: Song Title - Artist Name
 
-BLUFF - John Park
-All I Want - John Park
-Sanctuary - Joji
-Your Man - Joji
-Afterthought - Joji
-404 - KiiKii
-WISH - NCT WISH
+너와의 모든 순간 - 재쓰비
+Broom Taki - 가비 Gabee
+Blingy - NCT 127
+Ordinary Feelings - Mack Keane
+So Good - Shay Lia Kaytranada
+길 - GOD
+Skibidi - Girls Generation HRS
+Queen of the Party - WENDY
+Dirty - Kaho Hung
+Empty House - Brook Rivers
+Open Your Eyes - Close Your Eyes

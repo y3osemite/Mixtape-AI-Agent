@@ -24,7 +24,7 @@ Run `command -v yt-dlp ffmpeg ffprobe python3`.
 Normalize whatever the user gives you:
 - "Artist - Title", "Title by Artist", "Title (Artist)", numbered lists, screenshots → `Title - Artist`. If you can't tell which part is the artist, ask rather than guess.
 - `download.sh` splits on the **first** ` - ` for the title and the **last** `- ` for the artist, so the title and artist must not themselves contain ` - `. Drop that part or replace it with a space (e.g. `Song - Remastered 2011` → `Song Remastered 2011`).
-- Remove `/` from titles and artists (it breaks file paths). Avoid `?`, `,`, `:`, `"` where you can — they cause Final Cut Pro import problems (see README "Known Limitations").
+- Remove `/` and apostrophes (`'`) from titles and artists. `/` breaks file paths, and `download.sh` can't read a line containing an apostrophe (e.g. `Girls' Generation` → `Girls Generation`). Avoid `?`, `,`, `:`, `"` where you can — they cause Final Cut Pro import problems (see README "Known Limitations").
 - Keep feature credits out of the artist field unless needed to find the right track (`Title - Artist`, not `Title - Artist feat. X`).
 
 Then update `songs.txt`:
