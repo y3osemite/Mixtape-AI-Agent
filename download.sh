@@ -49,13 +49,8 @@ while IFS= read -r line || [[ -n "$line" ]]; do
 done < "$SONGS_FILE"
 
 echo ""
-echo "🎬 Generating FCPXML..."
-python3 "$SCRIPT_DIR/scripts/generate_fcpxml.py" "$OUTPUT_DIR" "$SCRIPT_DIR/playlist.fcpxml"
-
-echo ""
 echo "════════════════════════════════════"
 echo "  ✅ Downloaded : $SUCCESS songs"
 echo "  ⚠️  Failed    : $FAILED songs"
 echo "  📁 Output     : $OUTPUT_DIR"
-echo "  🎬 FCPXML     : $SCRIPT_DIR/playlist.fcpxml"
 echo "════════════════════════════════════"
