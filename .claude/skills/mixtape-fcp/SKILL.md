@@ -11,12 +11,13 @@ All paths are relative to the repo root (the folder containing `download.sh`).
 
 ## 1. Check what will go on the timeline
 
-`scripts/generate_fcpxml.py` puts **every** `*.mp3` directly inside `output/` on the timeline, in **alphabetical order by file name** (`<Artist>_<Title>.mp3`, so effectively sorted by artist). It does not follow the order in `songs.txt`.
+`scripts/generate_fcpxml.py` puts **every** `*.mp3` directly inside `output/` on the timeline, **in the same order as `songs.txt`**. It matches each line to its `<Artist>_<Title>.mp3` file. MP3s that don't match any line (e.g. renamed or added by hand) go at the end, alphabetically. If the user wants a different order, reorder the lines in `songs.txt` (with their OK) and rebuild.
 
 Before building, list `output/*.mp3` for the user, in that order, and check:
 - Are there leftover songs from an older playlist? If so, ask whether to move them into a dated folder (e.g. `output/archive-YYYY-MM-DD/`) first. Files in subfolders are ignored.
 - Are any songs from `songs.txt` missing from `output/`? Mention them and offer to download them first.
-- Do any file names contain `?`, `,`, `:`, `&`, `"` or `#`? These are known to cause Final Cut Pro media-linking problems (README "Known Limitations"). Offer to rename those files to a plain version first, e.g. `Joji_Whats Up.mp3` instead of `Joji_What's Up?.mp3`.
+- Are any MP3s going to land at the end because they don't match a `songs.txt` line? Point them out.
+- Do any file names contain `?`, `,`, `:`, `&`, `"` or `#`? These are known to cause Final Cut Pro media-linking problems (README "Known Limitations"). Offer to rename those files to a plain version first, e.g. `Joji_Whats Up.mp3` instead of `Joji_What's Up?.mp3`, and update the matching `songs.txt` line the same way so the order still matches.
 
 If everything looks fine, go ahead without asking.
 
@@ -32,7 +33,7 @@ python3 scripts/generate_fcpxml.py output playlist.fcpxml
 
 Tell the user:
 - how many songs are on the timeline and the total running time,
-- the order they'll appear in (and that it's alphabetical by artist, not the `songs.txt` order),
+- the order they'll appear in (the `songs.txt` order, plus any unmatched files at the end),
 - how to import: in Final Cut Pro, **File → Import → XML…** and choose `playlist.fcpxml` in the project folder.
 
 Be upfront that this step is still a work in progress: Final Cut Pro may fail to link some files. If the user reports an import error, ask for the exact message and look at `scripts/generate_fcpxml.py` together with them. Don't rewrite the script unprompted.

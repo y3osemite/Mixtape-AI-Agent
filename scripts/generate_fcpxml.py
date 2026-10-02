@@ -16,8 +16,23 @@ def seconds_to_fcp_time(seconds):
     frames = round(seconds * 30)
     return f"{frames}/30s"
 
-def generate_fcpxml(output_dir, fcpxml_path):
-    mp3_files = sorted(Path(output_dir).glob("*.mp3"))
+def order_by_songs_list(mp3_files, songs_path):
+    # Same "Title - Artist" -> "Artist_Title" naming as download.sh
+    order = []
+    if Path(songs_path).exists():
+        for line in Path(songs_path).read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            title = " ".join(line.split(" - ", 1)[0].split())
+            artist = " ".join(line.rsplit("- ", 1)[-1].split())
+            order.append(f"{artist}_{title}")
+    rank = {stem: i for i, stem in enumerate(order)}
+    # Songs not in the list go at the end, alphabetically
+    return sorted(mp3_files, key=lambda f: (rank.get(f.stem, len(order)), f.stem))
+
+def generate_fcpxml(output_dir, fcpxml_path, songs_path="songs.txt"):
+    mp3_files = order_by_songs_list(Path(output_dir).glob("*.mp3"), songs_path)
     if not mp3_files:
         print("No MP3 files found in output/")
         return
@@ -72,4 +87,5 @@ def generate_fcpxml(output_dir, fcpxml_path):
 if __name__ == "__main__":
     output_dir = sys.argv[1] if len(sys.argv) > 1 else "output"
     fcpxml_path = sys.argv[2] if len(sys.argv) > 2 else "playlist.fcpxml"
-    generate_fcpxml(output_dir, fcpxml_path)
+    songs_path = sys.argv[3] if len(sys.argv) > 3 else "songs.txt"
+    generate_fcpxml(output_dir, fcpxml_path, songs_path)

@@ -156,7 +156,7 @@ Once the files in `output/` are the ones you want:
 python3 scripts/generate_fcpxml.py output playlist.fcpxml
 ```
 
-Then in Final Cut Pro: `File → Import → XML → playlist.fcpxml`. Every MP3 in `output/` goes on the timeline, in alphabetical order by file name.
+Then in Final Cut Pro: `File → Import → XML → playlist.fcpxml`. Every MP3 in `output/` goes on the timeline in the same order as `songs.txt`. To change the order, reorder the lines in `songs.txt` and run the command again.
 
 ---
 
