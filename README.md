@@ -158,7 +158,8 @@ File → Import → XML → playlist.fcpxml
 
 ```
 playlist-downloader/
-├── SKILL.md                  ← AI agent instructions (Claude)
+├── .claude/skills/mixtape/
+│   └── SKILL.md              ← AI agent instructions (Claude)
 ├── songs.txt                 ← Edit this with your song list
 ├── download.sh               ← Main runner script
 ├── scripts/
@@ -228,27 +229,34 @@ This project is non-commercial. All music used in playlists remains the property
 
 ---
 
-## Using with an AI Agent (SKILL.md)
+## Using with Claude (no terminal needed)
 
-This repo includes a `SKILL.md` file — a structured instruction set that lets AI agents like Claude run this workflow automatically on your behalf.
+This repo includes a Claude skill at `.claude/skills/mixtape/SKILL.md`: a set of instructions that lets Claude run the whole workflow for you while you just chat.
 
-**What SKILL.md does:**
-- Tells the AI agent exactly how to parse `songs.txt`
-- Defines the correct `yt-dlp` commands, flags, and search query format
-- Specifies file naming conventions and metadata tagging steps
-- Guides the agent through FCPXML generation for Final Cut Pro
-- Includes error handling logic (what to do if a download fails, file already exists, etc.)
+**One-time setup:**
+1. Install the [Claude desktop app](https://claude.ai/download) on your Mac and sign in.
+2. Open the **Code** tab and choose this folder (`playlist-downloader`) as the project folder.
+3. Make sure `yt-dlp` and `ffmpeg` are installed (see Setup above). Claude will tell you if they're missing.
 
-**How to use it with Claude:**
+Claude needs to run **on your Mac** (the desktop app does this) so the MP3s land in your `output/` folder, where Final Cut Pro can use them. A cloud session would download them to a temporary server instead, and YouTube often blocks downloads from those.
 
-Simply describe what you want in plain language:
+**Then just ask in plain language:**
 
-> *"Download these songs and prepare them for Final Cut Pro: 1000 - NCT WISH, Sanctuary - Joji, Levitating - Dua Lipa"*
+> *"Download these: 1000 - NCT WISH, Sanctuary - Joji, Levitating - Dua Lipa"*
 
-Claude will read `SKILL.md`, execute each step, and report back with a summary of what succeeded and what needs manual review.
+> *"Here's my new playlist"* (paste a list or a screenshot)
+
+> *"The Afterthought file sounds wrong, here's the right link: https://youtube.com/..."*
+
+**What Claude does (as defined in the skill):**
+- Converts your list into `songs.txt` format and adds only the new songs
+- Runs `download.sh`, which skips songs you already have
+- Checks each new file's length and title to flag likely wrong matches (live versions, covers, compilations)
+- Retries failed songs with better searches, or asks you for a YouTube link
+- Regenerates `playlist.fcpxml` and gives you a short summary: downloaded, skipped, needs a listen, failed
 
 **Why this matters:**
-Most automation scripts are black boxes. `SKILL.md` makes the logic transparent and editable — you can read it, modify the behavior, or hand it to any AI agent that supports skill/instruction files. It's the difference between a script you run and a workflow you own.
+Most automation scripts are black boxes. `SKILL.md` makes the logic transparent and editable: you can read it, change the behavior, or hand it to any AI agent that supports skill/instruction files. It's the difference between a script you run and a workflow you own.
 
 ---
 
